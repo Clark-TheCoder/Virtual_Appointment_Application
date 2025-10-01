@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In</title>
+  <link rel="stylesheet" href="/css/provider/form.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="form_wrapper">
+    <div class="form_container">
+      <div class="title_container">
+        <h1>Log In</h1>
+      </div>
+      <form id="login_form">
+        <div class="input_div">
+          <input type="email" id="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input_div">
+          <input type="password" id="password" name="password" placeholder="Password" required>
+        </div>
+        <div id="error_message_div">
+          <p id="error_message">Login failure. Please try again.</p>
+        </div>
+        <div class="submit_link_container">
+          <button class="inactive_button" id="submit_button" type="submit" disabled>Log In</button>
+          <a href="/auth/signup">Sign Up</a>
+          </di>
+        </div>
+    </div>
+
+</body>
+
+</html>

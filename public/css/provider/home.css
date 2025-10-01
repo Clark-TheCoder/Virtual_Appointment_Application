@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #ede8e1ed;
+  background-image: url("/media/images/homeBackground.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.page_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  height: calc(100vh - 80px);
+  width: 100%;
+}
+
+.content_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 70%;
+  width: 90%;
+}
+
+.welcome_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  background-color: #2184a3;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.welcome_container h1 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2em;
+  color: #cfe7eb;
+}
+
+.options_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  background-color: #cfe7eb;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 20px 0px;
+}
+
+.options a {
+  background-color: #2184a3;
+  font-family: "Montserrat", sans-serif;
+  border: none;
+  margin: 10px;
+  width: 90%;
+  flex: 1;
+  text-decoration: none;
+  color: #cfe7eb;
+  font-size: larger;
+  font-weight: 600;
+  text-align: center; /* Center text vertically and horizontally */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  transition: scale 0.3s;
+}
+
+.options_container a:hover {
+  scale: 1.05;
+}
+
+h1,
+h3 {
+  font-family: "Montserrat", sans-serif;
+  padding: 20px;
+  color: #ede8e1;
+}
+
+h3 {
+  font-family: "Montserrat", sans-serif;
+  padding: 20px;
+  color: #2184a3;
+}
+
+@media (max-width: 600px) {
+  .page_wrapper {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    transition: height 0.2s ease-in;
+  }
+
+  .content_container {
+    width: 100%;
+    height: 80%;
+    flex-direction: column;
+    justify-content: start;
+    align-items: stretch;
+    flex: 1;
+  }
+
+  .welcome_container {
+    height: 40%;
+    width: 100%;
+  }
+
+  .options_container {
+    width: 100%;
+  }
+}

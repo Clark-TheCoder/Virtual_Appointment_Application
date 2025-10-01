@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate Link</title>
+  <link rel="stylesheet" href="/css/provider/form.css">
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+  <div class="form_wrapper">
+    <div class="form_container">
+      <div class="title_container">
+        <h1>Create Call Link</h1>
+      </div>
+      <form id="createLink_form">
+        <div class="input_div">
+          <input type="text" id="firstname" name="firstname" placeholder="Patient's First Name" required>
+        </div>
+        <div class="input_div">
+          <input type="number" id="dayOfBirth" name="day" min="1" max="31" required placeholder="Patient's Day of Birth:" />
+        </div>
+        <div class="input_div">
+          <input type="email" id="email" name="email" placeholder="Patient's Email">
+        </div>
+        <div class="input_div">
+          <input type="phone" id="phone" name="phone" placeholder="Patient's Phone #">
+        </div>
+        <div id="error_message_div">
+          <p id="error_message">Failed to generate token. Please try again.</p>
+        </div>
+        <div class="submit_link_container">
+          <button class="inactive_button" id="submit_button" type="submit" disabled>Generate and Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--
+  <link rel="stylesheet" href="/css/popup.css" />
+  <div id="page_overlay"></div>
+  <div id="popup">
+    <h1>Success.</h1>
+    <div class="popup-button-container">
+      <button id="close_button">Create Another Link</button>
+       Updated to use button_link class
+  <a href="/call/scheduled_calls" class="button_link">View Scheduled Calls</a>
+  </div>
+  </div>
+
+
+  <script type="module" src="/js/create_link/index.js"></script>
+     -->
+  <script src="/js/navbar.js"></script>
+</body>
+
+</html>

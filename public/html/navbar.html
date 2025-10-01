@@ -1,0 +1,105 @@
+<style>
+  nav {
+    height: 80px;
+    padding: 0 1rem; /* left and right only */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2184a3;
+    box-sizing: border-box;
+    z-index: 10;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  nav a img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .show_menu {
+    transform: rotate(90deg);
+    transition: transform 0.8s ease;
+  }
+
+  #navigation_container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #cfe7eb;
+    z-index: 10;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  #navigation_container.show_nav {
+    max-height: 500px;
+  }
+
+  #navigation_container ul {
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #navigation_container li {
+    width: 100%;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    color: #2184a3;
+    font-size: large;
+    text-align: center;
+  }
+
+  #navigation_container a {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    text-decoration: none;
+    color: #2184a3;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: large;
+    text-align: center;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  #navigation_container ul li:hover {
+    background: #00a9a7;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+  }
+</style>
+
+<nav>
+  <a id="logo" href="https://www.nshealth.ca"
+    ><img src="/media/images/WWH_Small_Logo.png" alt="WellWave Health"
+  /></a>
+
+  <img
+    id="menu_icon"
+    src="/media/provider/navbar/menu_burger.png"
+    alt="Menu"
+    height="35px"
+    width="35px"
+  />
+</nav>
+
+<div id="navigation_container">
+  <ul>
+    <li><a href="/home">Home</a></li>
+    <li><a href="/call/create_link">Create Call Link</a></li>
+    <li><a href="/call/scheduled_calls">Scheduled Calls</a></li>
+    <li><a href="/call/call_history">Call History</a></li>
+    <li><a href="/user/edit_user_details">Edit Account</a></li>
+    <li><a id="logout" href="#">Log Out</a></li>
+  </ul>
+</div>

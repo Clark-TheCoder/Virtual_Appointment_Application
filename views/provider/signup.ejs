@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/css/provider/form.css">
+</head>
+
+<body>
+  <div class="form_wrapper">
+    <div class="form_container">
+      <div class="title_container">
+        <h1>Sign Up</h1>
+      </div>
+      <form id="signup_form">
+        <div class="input_div">
+          <input type="text" id="firstname" name="firstname" placeholder="First Name" required>
+        </div>
+        <div class="input_div">
+          <input type="text" id="lastname" name="lastname" placeholder="Last Name" required>
+        </div>
+        <div class="select_div">
+          <select name="position" id="position">
+            <option value="" disabled selected hidden>Position</option>
+            <option value="doctor">Doctor</option>
+            <option value="nurse">Nurse</option>
+            <option value="Psychiatrist">Psychiatrist</option>
+            <option value="Nutritionist">Nutritionist</option>
+          </select>
+        </div>
+        <div class="input_div">
+          <input type="email" id="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input_div">
+          <input type="password" id="password" name="password" placeholder="Password" required>
+        </div>
+        <div class="input_div">
+          <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+        </div>
+        <div id="error_message_div">
+          <p id="error_message">Sign up failure. Please try again.</p>
+        </div>
+        <div class="submit_link_container">
+          <button class="inactive_button" id="submit_button" type="submit" disabled>Sign Up</button>
+          <a href="/auth/login">Log In</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="module" src="/js/signup/index.js"></script>
+</body>
+
+</html>
