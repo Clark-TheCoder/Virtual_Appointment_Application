@@ -1,6 +1,5 @@
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
-const submitButton = document.getElementById("submit_button");
 const errorMessage = document.getElementById("error_message_div");
 const errorMessageText = document.getElementById("error_message");
 
