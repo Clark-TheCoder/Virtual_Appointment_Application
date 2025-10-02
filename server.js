@@ -2,6 +2,7 @@ import { configDotenv } from "dotenv";
 import express from "express";
 import http from "http";
 import path from "path";
+import cookieParser from "cookie-parser";
 
 // Get .env variables
 configDotenv();
@@ -9,20 +10,22 @@ configDotenv();
 const app = express();
 const server = http.createServer(app);
 
-// Serve static files from public folder
+// Middleware (before routes)
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files
 app.use(express.static("public"));
 
 // Set EJS as view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "views"));
 
-// Route
+// Routes
 app.get("/", (req, res) => {
   res.render("provider/landingPage");
 });
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Modular routes
 import authRoutes from "./routes/authRoute.js";
