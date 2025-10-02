@@ -1,11 +1,12 @@
-import { validateForm } from "./formValidator.js";
-//import { handleLoginSubmit } from "./formSubmitHandler.js";
+import { login } from "./login.js";
+import { validateForm } from "./validateForm.js";
 
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const loginForm = document.getElementById("login_form");
+document.addEventListener("DOMContentLoaded", () => {
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
 
-emailInput.addEventListener("input", validateForm);
-passwordInput.addEventListener("input", validateForm);
-
-// loginForm.addEventListener("submit", handleLoginSubmit);
+  emailInput.addEventListener("input", validateForm);
+  passwordInput.addEventListener("input", validateForm);
+  const loginForm = document.getElementById("login_form");
+  loginForm.addEventListener("submit", login);
+});
