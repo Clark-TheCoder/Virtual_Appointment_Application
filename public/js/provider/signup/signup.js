@@ -22,7 +22,7 @@ export async function signup(e) {
       body: JSON.stringify({ firstname, lastname, position, email, password }),
     });
     if (response.ok) {
-      window.location.href = "/home";
+      window.location.href = "/user/home";
     } else {
       errorMessage.style.display = "flex";
       errorMesageText.textContent = data.message || "Signup failed";
