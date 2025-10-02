@@ -1,6 +1,7 @@
 {
   "name": "telehealth-app",
   "version": "1.0.0",
+  "type": "module",
   "description": "Doctor-patient telehealth application with WebRTC, Socket.IO, and Node.js",
   "main": "server.js",
   "scripts": {
