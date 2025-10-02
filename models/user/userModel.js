@@ -30,7 +30,7 @@ export async function createNewUser(
       [result.insertId]
     );
 
-    return rows[0]; // return just the user object
+    return rows[0];
   } catch (error) {
     throw new Error("Error creating user: " + error.message);
   }
@@ -44,7 +44,7 @@ export async function findUserByEmail(email) {
     );
 
     if (rows.length > 0) {
-      return rows[0]; // User exists
+      return rows[0];
     }
     return null; // User does not exist
   } catch (error) {
