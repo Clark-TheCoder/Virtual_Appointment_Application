@@ -41,8 +41,8 @@ export async function createUser(req, res) {
     // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: false,
+      sameSite: "Lax",
       maxAge: 8 * 60 * 60 * 1000,
     });
 
@@ -86,8 +86,8 @@ export async function authenticateUser(req, res) {
     // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: false,
+      sameSite: "Lax",
       maxAge: 8 * 60 * 60 * 1000,
     });
 

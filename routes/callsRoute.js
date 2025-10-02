@@ -1,10 +1,13 @@
 import express from "express";
+import authenticateToken from "../middleware/authenticateToken.js";
+import { createCall } from "../controllers/call/callController.js";
 const router = express.Router();
 
 //create link routes
 router.get("/create_link", (req, res) => {
   res.render("provider/create_link");
 });
+router.post("/create_link", authenticateToken, createCall);
 
 //visit summary routes
 router.get("/visit_summary", (req, res) => {
