@@ -2,7 +2,7 @@ export async function deleteCall(call) {
   const access_token = call.access_token;
 
   try {
-    const response = await fetch("/call/delseteCall", {
+    const response = await fetch("/call/deleteCall", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
