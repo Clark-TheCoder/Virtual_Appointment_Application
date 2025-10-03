@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scheduled Calls</title>
+  <link rel="stylesheet" href="/css/provider/scheduledCalls.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+  <div id="wrapper">
+    <div class="title_container">
+      <h1>Today's Calls:</h1>
+    </div>
+    <div id="calls">
+      <div class="call" style="background-color: #00a9a7;">
+        <h1>Patient Alias 1</h1>
+        <h3 class="call_status">In Progress</h3>
+        <div class="call_buttons_div">
+          <button class="join_button">Join</button>
+          <button class="chart_button">Chart</button>
+          <button class="cancel_button">Cancel</button>
+        </div>
+      </div>
+
+
+      <!-- Call with status "in_progress" -->
+      <div class="call" style="background-color: #046b6a;">
+        <h1>Patient Alias 2</h1>
+        <div class="call_buttons_div">
+          <button class="join_button">Join</button>
+          <button class="chart_button">Chart</button>
+          <button class="cancel_button">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Call with status "completed_not_charted" -->
+      <div class="call" style="background-color: #a4a4a4;">
+        <h1>Patient Alias 3</h1>
+        <div class="call_buttons_div">
+          <button class="chart_button">Chart</button>
+        </div>
+      </div>
+    </div>
+    <div id="error_message_div">
+      <p id="error_message">Login failure. Please try again.</p>
+    </div>
+    <a href="/call/create_link" class="button_link">Create Call</a>
+  </div>
+
+
+  <link rel="stylesheet" href="/css/general/popup.css" />
+  <div id="page_overlay"></div>
+  <div id="popup">
+    <h1>Success.</h1>
+    <div class="popup-button-container">
+    </div>
+  </div>
+  <!--
+  <link rel="stylesheet" href="/css/pre_call_popup.css" />
+  <div id="pc_page_overlay"></div>
+  <div id="pc_popup">
+    <h2>Would you like to begin this call?</h2>
+    <div class="settings_container">
+      <div class="video_example">
+        <div class="video_placeholder">
+          <video id="video_preview" autoplay playsinline muted></video>
+          <img id="camera_icon" src="/media/images/camera-off-2.png" alt="Camera Turned Off">
+          <audio id="localAudio" autoplay playsinline style="display:none"></audio>
+        </div>
+      </div>
+      <div class="settings">
+        <h3>Call Settings:</h3>
+        <div class="camera_settings_container">
+          <div class="camera_label_container">
+            <img id="camera_image" src="/media/images/camera_off.png" alt="Video">
+            <h4>Camera</h4>
+          </div>
+          <button id="camera_button"></button>
+        </div>
+
+        <div class="audio_settings_container">
+          <div class="audio_label_container">
+            <img id="audio_image" src="/media/images/volume_off.png" alt="Microphone">
+            <h4>Microphone</h4>
+          </div>
+          <button id="audio_button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="pc_button_container">
+      <button id="cancel_call_button" class="enabledButton">Cancel</button>
+      <button id="join_call_button" class="enabledButton">Join Call</button>
+    </div>
+  </div>
+  -->
+
+  <script type="module" src="/js/provider/scheduledCalls/index.js"></script>
+  <script type="module" src="/js/ui/navbar.js"></script>
+</body>
+
+</html>
