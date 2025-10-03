@@ -1,44 +1,12 @@
-// export async function createCall(req, res) {
-//   const userId = req.user.id;
-
-//   const { firstname, dayOfBirth, email } = req.body;
-//   const patientAlias = generatePatientAlias(firstname, dayOfBirth);
-
-//   const roomId = uuidv4();
-//   const access_token = crypto.randomBytes(16).toString("hex");
-
-//   try {
-//     const link = `http://localhost:3000/call/join/${access_token}`;
-
-//     if (email) {
-//       const sentEmail = await emailCallLink(email, link);
-//       if (!sentEmail || sentEmail.error) {
-//         return res.status(500).json({
-//           message: "Link failed to send to this email address",
-//         });
-//       }
-//     }
-//     const newLink = await createCall(
-//       roomId,
-//       userId,
-//       patientAlias,
-//       access_token
-//     );
-//     res.status(200).json({
-//       message: "Link generated successfully and sent to patient",
-//       link: link,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       message: "Cannot generate link at this time. Sign back in and try again.",
-//     });
-//   }
-// }
 import { v4 as uuidv4 } from "uuid";
 import crypto from "crypto";
 import { Resend } from "resend";
 import dotenv from "dotenv";
-import { createNewCall } from "../../models/call/callModel.js";
+import {
+  createNewCall,
+  getCurrentCalls,
+  deleteCallById,
+} from "../../models/call/callModel.js";
 dotenv.config();
 
 export async function createCall(req, res) {
@@ -64,7 +32,7 @@ export async function createCall(req, res) {
       const sentEmail = await emailCallLink(email, link);
       if (!sentEmail || sentEmail.error) {
         return res.status(500).json({
-          message: "Link failed to send to this email address",
+          message: "Link failed to send to this email address.",
         });
       }
     }
@@ -77,12 +45,12 @@ export async function createCall(req, res) {
     );
 
     if (!newLink) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Unable to generate link at this time.",
       });
     }
     res.status(200).json({
-      message: "Link generated successfully and sent to patient",
+      message: "Link generated successfully and sent to patient.",
     });
   } catch (error) {
     res.status(500).json({
@@ -110,5 +78,55 @@ async function emailCallLink(patientEmail, link) {
   } catch (error) {
     console.error("Failed to send email via Resend.");
     return { error };
+  }
+}
+
+export async function getScheduledCalls(req, res) {
+  const userId = req.user?.id;
+
+  if (!userId) {
+    return res.status(401).json({ message: "Unauthorized: no user ID." });
+  }
+
+  try {
+    const todaysCalls = await getCurrentCalls(userId);
+
+    res.status(200).json({
+      message:
+        todaysCalls.length === 0 ? "No calls scheduled for today." : "Success",
+      calls: todaysCalls,
+    });
+  } catch (error) {
+    console.error("Error in getScheduledCalls:", error);
+    res.status(500).json({
+      message: "Failed to retrieve today's calls. Please try again later.",
+      error: error.message,
+      calls: [],
+    });
+  }
+}
+
+export async function deleteCall(req, res) {
+  const { access_token } = req.body;
+  const userId = req.user?.id;
+
+  if (!userId) {
+    return res.status(401).json({ success: false, message: "Access Denied" });
+  }
+
+  try {
+    const result = await deleteCallById(access_token, userId);
+
+    if (!result) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Call not found or not deleted" });
+    }
+
+    return res.status(200).json({ success: true, message: "Call deleted" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
   }
 }
