@@ -32,21 +32,6 @@ export function createCallCard(call) {
     callDiv.style.backgroundColor = "#a4a4a4";
     buttonDiv.appendChild(createChartButton(call));
   }
-  //   if (call.status === "generated") {
-  //     callDiv.style.backgroundColor = "#00a9a7";
-  // buttonDiv.appendChild(createJoinButton(call));
-  // buttonDiv.appendChild(createChartButton(call));
-  // buttonDiv.appendChild(createCancelButton(call));
-  //     callStatus.textContent = "Scheduled";
-  //   } else if (call.status === "in_progress") {
-  //     callDiv.style.backgroundColor = "#046b6a";
-  // buttonDiv.appendChild(createJoinButton(call));
-  //     callStatus.textContent = "In Progress";
-  //   } else if (call.status === "completed_not_charted") {
-  //     callDiv.style.backgroundColor = "#a4a4a4";
-  // buttonDiv.appendChild(createChartButton(call));
-  //     callStatus.textContent = "Completed-Not Charted";
-  //   }
 
   callDiv.appendChild(buttonDiv);
   return callDiv;
