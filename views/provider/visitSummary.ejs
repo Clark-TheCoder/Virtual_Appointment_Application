@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visit Summary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/provider/visitSummary.css">
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+  <div class="form_wrapper">
+    <div class="form_container">
+      <div class="title_container">
+        <h1>Visit Summary</h1>
+      </div>
+      <div class="warning_message">
+        <p>*Use this form to record brief notes that are sufficient to support recall of the visit. Please do not include any patient names/identifiers in this form. This summary is intended only to confirm that the patient visit occurred and is not a substitute for detailed clinical notes.
+          In-depth documentation should be recorded separately in the appropriate medical record system.*
+        </p>
+      </div>
+      <form id="visitSummary_form">
+
+        <div id="visit_status" class="input_div">
+          <div class="section_label_div">
+            <h3>Visit Status:</h3>
+          </div>
+          <div class="section_inputs_div">
+            <div class="subsection_inputs_div">
+              <label><input type="radio" class="visit_status_input" name="visit_status" value="completed" hidden><span>Completed</span></label>
+              <label><input type="radio" class="visit_status_input" name="visit_status" value="no_show" hidden><span>No Show</span></label>
+              <label><input type="radio" class="visit_status_input" name="visit_status" value="cancelled_by_patient" hidden><span>Canceled by Patient</span></label>
+              <label><input type="radio" class="visit_status_input" name="visit_status" value="cancelled_by_provider" hidden><span>Canceled by Provider</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div id="call_summary" class="hidden_input_div">
+          <div class="section_label_div">
+            <h3>Call Summary:</h3>
+          </div>
+          <div class="section_inputs_div">
+            <textarea class="freetext" id="summary_textarea" placeholder="Summary of discussion with patient..."></textarea>
+          </div>
+        </div>
+
+        <div id="plan" class="hidden_input_div">
+          <div class="section_label_div">
+            <h3>Plan:</h3>
+          </div>
+          <div class="section_inputs_div">
+            <textarea class="freetext" id="plan_textarea" placeholder="Care plan details, prescriptions, consultations..."></textarea>
+          </div>
+        </div>
+
+        <div id="notes" class="hidden_input_div">
+          <div class="section_label_div">
+            <h3>Additional Notes:</h3>
+          </div>
+          <div class="section_inputs_div">
+            <textarea class="freetext" id="notes_textarea" placeholder="Enter notes here..."></textarea>
+          </div>
+        </div>
+
+        <div id="error_message_div">
+          <p id="error_message">Could not edit user details at this time. Please try signing back in and trying again.</p>
+        </div>
+
+        <div class="submit_link_container">
+          <button class="inactive_button" id="submit_button" type="button" disabled>Submit</button>
+          <button id="cancel_button" type="button">Cancel</button>
+        </div>
+      </form>
+
+      <link rel="stylesheet" href="/css/general/popup.css" />
+      <div id="page_overlay"></div>
+      <div id="popup">
+        <h1>Success.</h1>
+        <div class="popup-button-container">
+          <button id="undo_button">Undo</button>
+          <button id="continue_button" type="submit">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/ui/navbar.js"></script>
+  <script type="module" src="/js/provider/visitSummary/index.js"></script>
+</body>
+
+</html>
