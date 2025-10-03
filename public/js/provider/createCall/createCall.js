@@ -3,6 +3,9 @@ const dayOfBirthInput = document.getElementById("dayOfBirth");
 const emailInput = document.getElementById("email");
 const errorMessage = document.getElementById("error_message_div");
 const errorMessageText = document.getElementById("error_message");
+const submitButton = document.getElementById("submit_button");
+const popup = document.getElementById("popup");
+const pageOverlay = document.getElementById("page_overlay");
 
 export async function createCall(e) {
   e.preventDefault();
@@ -24,8 +27,21 @@ export async function createCall(e) {
     const data = await response.json();
 
     if (response.ok) {
-      console.log(data.message);
-      console.log("dooof");
+      submitButton.disabled = true;
+
+      popup.style.display = "block";
+      popup.querySelector("h1").textContent = data.message;
+      pageOverlay.style.display = "block";
+
+      const closeButton = document.getElementById("close_button");
+      closeButton.addEventListener("click", () => {
+        popup.style.display = "none";
+        pageOverlay.style.display = "none";
+
+        firstNameInput.value = "";
+        dayOfBirthInput.value = "";
+        emailInput.value = "";
+      });
     } else {
       errorMessage.style.display = "flex";
       errorMessageText.textContent = data.message || "Error. Please try again.";
