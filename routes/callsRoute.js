@@ -4,6 +4,7 @@ import {
   createCall,
   deleteCall,
   getScheduledCalls,
+  getVisitSummary,
 } from "../controllers/call/callController.js";
 const router = express.Router();
 
@@ -11,12 +12,15 @@ const router = express.Router();
 router.get("/create_link", (req, res) => {
   res.render("provider/create_link");
 });
+
 router.post("/create_link", authenticateToken, createCall);
 
 //visit summary routes
 router.get("/visit_summary", (req, res) => {
-  res.render("visit_summary");
+  res.render("provider/visitSummary");
 });
+
+router.post("/visit_summary", authenticateToken, getVisitSummary);
 
 //scheduled calls routes
 router.get("/scheduled_calls", (req, res) => {
