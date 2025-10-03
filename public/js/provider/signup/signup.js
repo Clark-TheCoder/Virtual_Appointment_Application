@@ -21,16 +21,15 @@ export async function signup(e) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ firstname, lastname, position, email, password }),
     });
+    const data = await response.json();
     if (response.ok) {
       window.location.href = "/user/home";
     } else {
       errorMessage.style.display = "flex";
       errorMesageText.textContent = data.message || "Signup failed";
-      return null;
     }
   } catch (error) {
     errorMessage.style.display = "flex";
     errorMesageText.textContent = "Server error. Please try again later";
-    return null;
   }
 }
