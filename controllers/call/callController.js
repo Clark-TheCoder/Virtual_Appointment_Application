@@ -6,6 +6,7 @@ import {
   createNewCall,
   getCurrentCalls,
   deleteCallById,
+  getCallNotes,
 } from "../../models/call/callModel.js";
 dotenv.config();
 
@@ -97,7 +98,6 @@ export async function getScheduledCalls(req, res) {
       calls: todaysCalls,
     });
   } catch (error) {
-    console.error("Error in getScheduledCalls:", error);
     res.status(500).json({
       message: "Failed to retrieve today's calls. Please try again later.",
       error: error.message,
@@ -128,5 +128,31 @@ export async function deleteCall(req, res) {
     return res
       .status(500)
       .json({ success: false, message: "Internal server error" });
+  }
+}
+
+export async function getVisitSummary(req, res) {
+  const { access_token } = req.body;
+  const userId = req.user?.id;
+
+  if (!userId || !access_token) {
+    return res.status(401).json({ message: "Access Denied" });
+  }
+
+  try {
+    let callNotes = getCallNotes(userId, access_token);
+    if (!callNotes) {
+      return res
+        .status(400)
+        .json({ message: "Could not get call notes at this time." });
+    } else {
+      return res.status(200).json({
+        notes: callNotes,
+      });
+    }
+  } catch (error) {
+    return res
+      .status(200)
+      .json({ message: "Could not get call notes at this time." });
   }
 }

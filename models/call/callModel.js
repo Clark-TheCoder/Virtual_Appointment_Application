@@ -50,3 +50,16 @@ export async function deleteCallById(access_token, userId) {
     throw new Error(`Error in deleteCall: ${error.message}`);
   }
 }
+
+export async function getCallNotes(access_token, userId) {
+  try {
+    const [result] = await pool.execute(
+      `SELECT call_notes FROM calls WHERE access_token = ? AND provider_id = ?`,
+      [access_token, userId]
+    );
+
+    return result.affectedRows > 0;
+  } catch (error) {
+    throw new Error(`Error in deleteCall: ${error.message}`);
+  }
+}
