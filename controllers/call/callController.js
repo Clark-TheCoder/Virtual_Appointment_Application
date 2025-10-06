@@ -140,14 +140,15 @@ export async function getCallData(req, res) {
   }
 
   try {
-    let callNotes = await getCall(access_token, userId);
-    if (!callNotes) {
+    let callData = await getCall(access_token, userId);
+
+    if (!callData) {
       return res
         .status(400)
         .json({ message: "Could not get call notes at this time." });
     } else {
       return res.status(200).json({
-        notes: callNotes,
+        callData,
       });
     }
   } catch (error) {

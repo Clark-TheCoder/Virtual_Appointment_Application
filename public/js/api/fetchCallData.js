@@ -9,8 +9,11 @@ export async function getCallData(access_token) {
 
     const data = await response.json();
     if (response.ok) {
-      console.log(data);
-      console.log("Okay");
+      let call = {
+        status: data.callData.status,
+        notes: data.callData.call_notes,
+      };
+      return call;
     } else {
       console.log("Bad");
     }
