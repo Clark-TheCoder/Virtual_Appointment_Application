@@ -140,7 +140,7 @@ export async function getVisitSummary(req, res) {
   }
 
   try {
-    let callNotes = getCallNotes(userId, access_token);
+    let callNotes = await getCallNotes(access_token, userId);
     if (!callNotes) {
       return res
         .status(400)
