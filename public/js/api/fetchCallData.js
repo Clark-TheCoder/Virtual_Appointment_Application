@@ -1,4 +1,4 @@
-export async function getCallSummary(access_token) {
+export async function getCallData(access_token) {
   try {
     let response = await fetch("/call/visit_summary", {
       method: "POST",

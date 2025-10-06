@@ -1,9 +1,6 @@
-import { getCallSummary } from "./api/getCallSummary.js";
+import { getCallData } from "../../api/fetchCallData.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await getCallSummary(sessionStorage.getItem("access_token"));
+  console.log(sessionStorage.getItem("access_token"));
+  await getCallData(sessionStorage.getItem("access_token"));
 });
-
-// window.addEventListener("beforeunload", () => {
-//   sessionStorage.removeItem("access_token");
-// });
