@@ -51,10 +51,10 @@ export async function deleteCallById(access_token, userId) {
   }
 }
 
-export async function getCallNotes(access_token, userId) {
+export async function getCall(access_token, userId) {
   try {
     const [rows] = await pool.execute(
-      `SELECT call_notes FROM calls WHERE access_token = ? AND provider_id = ?`,
+      `SELECT call_notes, status FROM calls WHERE access_token = ? AND provider_id = ?`,
       [access_token, userId]
     );
 

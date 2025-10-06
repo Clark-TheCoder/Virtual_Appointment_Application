@@ -6,7 +6,7 @@ import {
   createNewCall,
   getCurrentCalls,
   deleteCallById,
-  getCallNotes,
+  getCall,
 } from "../../models/call/callModel.js";
 dotenv.config();
 
@@ -131,7 +131,7 @@ export async function deleteCall(req, res) {
   }
 }
 
-export async function getVisitSummary(req, res) {
+export async function getCallData(req, res) {
   const { access_token } = req.body;
   const userId = req.user?.id;
 
@@ -140,7 +140,7 @@ export async function getVisitSummary(req, res) {
   }
 
   try {
-    let callNotes = await getCallNotes(access_token, userId);
+    let callNotes = await getCall(access_token, userId);
     if (!callNotes) {
       return res
         .status(400)
