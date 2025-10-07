@@ -15,7 +15,9 @@ export async function getCallData(access_token) {
       };
       return call;
     } else {
-      console.log("Bad");
+      alert("Cannot get call data at this time.");
     }
-  } catch (error) {}
+  } catch (error) {
+    alert("Server error. Please try again later.");
+  }
 }
