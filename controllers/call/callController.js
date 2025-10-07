@@ -7,7 +7,10 @@ import {
   getCurrentCalls,
   deleteCallById,
   getCall,
+  updateCallNotes,
+  updateCallStatus,
 } from "../../models/call/callModel.js";
+import { stat } from "fs";
 dotenv.config();
 
 export async function createCall(req, res) {
@@ -151,6 +154,37 @@ export async function getCallData(req, res) {
         callData,
       });
     }
+  } catch (error) {
+    return res
+      .status(200)
+      .json({ message: "Could not get call notes at this time." });
+  }
+}
+
+export async function updateCallData(req, res) {
+  const { access_token, status, newNotes } = req.body;
+  const userId = req.user?.id;
+
+  if (!access_token || !status || !newNotes) {
+    return res
+      .status(400)
+      .json({ message: "Unable to submit form with the current criteria." });
+  }
+
+  try {
+    let notesUpdated = updateCallNotes(access_token, userId, newNotes);
+    if (!notesUpdated) {
+      return res.status(400).json({ message: "Failed to update notes." });
+    }
+
+    let statusUpdated = updateCallStatus(access_token, userId, status);
+    if (!statusUpdated) {
+      return res.status(400).json({ message: "Failed to update status." });
+    }
+
+    return res.status(200).json({
+      message: "Visit summary and call status updated successfully.",
+    });
   } catch (error) {
     return res
       .status(200)

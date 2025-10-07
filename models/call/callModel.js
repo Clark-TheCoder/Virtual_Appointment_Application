@@ -67,3 +67,35 @@ export async function getCall(access_token, userId) {
     throw new Error(`Error in getCallNotes: ${error.message}`);
   }
 }
+
+export async function updateCallNotes(access_token, userId, formData) {
+  const { summary, plan, notes } = formData;
+
+  try {
+    const [result] = await pool.execute(
+      `UPDATE calls
+       SET call_notes = JSON_OBJECT(
+         'summary', ?,
+         'plan', ?,
+         'notes', ?
+       )
+       WHERE access_token = ? AND provider_id = ?`,
+      [summary, plan, notes, access_token, userId]
+    );
+    return result.affectedRows > 0;
+  } catch (error) {
+    throw new Error(`Error in updateCallNotes: ${error.message}`);
+  }
+}
+
+export async function updateCallStatus(access_token, userId, newStatus) {
+  try {
+    const [result] = await pool.execute(
+      `UPDATE calls SET status = ? WHERE access_token = ? AND provider_id = ?`,
+      [newStatus, access_token, userId]
+    );
+    return result.affectedRows > 0;
+  } catch (error) {
+    throw new Error(`Error in updateCallStatus: ${error.message}`);
+  }
+}

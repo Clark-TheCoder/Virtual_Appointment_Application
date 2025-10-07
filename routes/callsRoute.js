@@ -5,6 +5,7 @@ import {
   deleteCall,
   getScheduledCalls,
   getCallData,
+  updateCallData,
 } from "../controllers/call/callController.js";
 const router = express.Router();
 
@@ -21,6 +22,8 @@ router.get("/visit_summary", (req, res) => {
 });
 
 router.post("/visit_summary", authenticateToken, getCallData);
+
+router.post("/save_visit_summary", authenticateToken, updateCallData);
 
 //scheduled calls routes
 router.get("/scheduled_calls", (req, res) => {
