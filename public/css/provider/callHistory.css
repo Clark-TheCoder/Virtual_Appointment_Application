@@ -1,0 +1,235 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #ede8e1ed;
+  background-image: url("/media/provider/general/homeBackground.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.title_container {
+  margin-bottom: 20px;
+  background-color: #2184a3;
+  border-radius: 5px;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+}
+
+.form_wrapper {
+  margin: 0px auto;
+  padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+
+#search_form {
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+  background-color: #2185a340;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.inputs_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.date_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+h1,
+h3,
+h4 {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 5px;
+  color: #ede8e1ed;
+}
+
+input,
+select {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: large;
+  height: 40px;
+  font-family: "Montserrat", sans-serif;
+  font-size: large;
+  color: gray;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
+
+.active_button {
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  padding: 10px 20px;
+  color: #ede8e1;
+  border: none;
+  background-color: #2184a3;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: 500;
+}
+
+.active_button:hover {
+  background-color: #ede8e1;
+  color: #2184a3;
+  border: 2px solid #2184a3;
+  padding: 8px 18px;
+}
+
+.inactive_button {
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  padding: 10px 20px;
+  color: #929a9c;
+  border: none;
+  background-color: #c9c5bf;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: 500;
+  cursor: not-allowed;
+}
+
+button {
+  color: #2184a3;
+}
+
+#calls {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 60%;
+  height: fit-content;
+  gap: 15px;
+  margin-top: 30px;
+  padding-bottom: 50px;
+}
+
+.call {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 200px;
+  margin-top: 20px;
+}
+
+.call_cover {
+  background-color: #2184a3;
+  height: fit-content;
+  padding: 20px;
+}
+
+.call_notes {
+  background-color: #cfe7eb;
+  height: fit-content;
+  padding: 20px;
+}
+
+.top_info_container {
+  height: 50%;
+  display: flex;
+  flex: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.bottom_info_container {
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.info_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom_info_container button {
+  border: none;
+  background-color: transparent;
+}
+
+.bottom_info_container button:hover {
+  scale: 1.5;
+}
+
+.hidden {
+  display: none;
+}
+
+.call_notes h3,
+p {
+  font-family: "Montserrat", sans-serif;
+  color: #2184a3;
+}
+
+.call_notes div {
+  padding: 10px 5px;
+}
+
+#error_message_div {
+  margin: 10px;
+  width: 60%;
+  min-width: 200px;
+  height: 50px;
+  border-radius: 5px;
+  border: rgb(196, 36, 36) 3px solid;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+#error_message_div p {
+  font-family: "Montserrat", sans-serif;
+  color: #c42424;
+}
+
+@media (max-width: 600px) {
+  .call_buttons_div {
+    align-self: center;
+  }
+  .button {
+    font-size: medium;
+    font-weight: 500;
+    transition: font-size 0.3s ease;
+  }
+  #calls {
+    width: 90%;
+    transition: width 0.4s ease-in-out;
+  }
+}

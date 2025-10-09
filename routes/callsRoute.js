@@ -34,7 +34,7 @@ router.get("/load_calls", authenticateToken, getScheduledCalls);
 
 //call history routes
 router.get("/call_history", (req, res) => {
-  res.render("call_history");
+  res.render("provider/callHistory");
 });
 
 //doctor call view
