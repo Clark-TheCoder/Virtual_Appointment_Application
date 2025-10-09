@@ -99,3 +99,52 @@ export async function updateCallStatus(access_token, userId, newStatus) {
     throw new Error(`Error in updateCallStatus: ${error.message}`);
   }
 }
+
+export async function retrieveCalls(searchFields) {
+  const { exactDate, startRange, endRange, status, alias } = searchFields;
+
+  const filters = [];
+  const values = [];
+
+  if (exactDate) {
+    filters.push("DATE(date_created) = ?");
+    values.push(exactDate);
+  }
+
+  if (startRange && endRange) {
+    const endDateObj = new Date(endRange);
+    endDateObj.setDate(endDateObj.getDate() + 1);
+    const endRangePlusOne = endDateObj.toISOString().split("T")[0];
+
+    filters.push("date_created >= ? AND date_created < ?");
+    values.push(startRange, endRangePlusOne);
+  }
+
+  if (status) {
+    filters.push("status = ?");
+    values.push(status);
+  } else {
+    filters.push(
+      "(status = 'completed' OR status = 'cancelled_by_provider' OR status = 'cancelled_by_patient' OR status = 'no_show')"
+    );
+  }
+
+  if (alias) {
+    filters.push("patient_alias = ?");
+    values.push(alias);
+  }
+
+  const whereClause =
+    filters.length > 0 ? "WHERE " + filters.join(" AND ") : "";
+
+  try {
+    const [results] = await pool.execute(
+      `SELECT patient_alias, date_created, duration_minutes, status, call_notes 
+       FROM calls ${whereClause}`,
+      values
+    );
+    return results;
+  } catch (error) {
+    throw new Error(`Error in retrieveCalls: ${error.message}`);
+  }
+}

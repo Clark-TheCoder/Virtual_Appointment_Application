@@ -9,6 +9,7 @@ import {
   getCall,
   updateCallNotes,
   updateCallStatus,
+  retrieveCalls,
 } from "../../models/call/callModel.js";
 import { stat } from "fs";
 dotenv.config();
@@ -187,7 +188,114 @@ export async function updateCallData(req, res) {
     });
   } catch (error) {
     return res
-      .status(200)
+      .status(500)
       .json({ message: "Could not get call notes at this time." });
+  }
+}
+
+export function formatDateQuery(date) {
+  const { year, month, day } = date;
+
+  const paddedYear = String(year).padStart(4, "0");
+
+  if (year && month && day) {
+    const paddedMonth = String(month).padStart(2, "0");
+    const paddedDay = String(day).padStart(2, "0");
+    return { exactDate: `${paddedYear}-${paddedMonth}-${paddedDay}` };
+  }
+
+  if (year && month && !day) {
+    const numericMonth = Number(month);
+    let nextMonth = numericMonth === 12 ? 1 : numericMonth + 1;
+    let nextYear = numericMonth === 12 ? Number(year) + 1 : Number(year);
+
+    const paddedMonth = String(numericMonth).padStart(2, "0");
+    const paddedNextMonth = String(nextMonth).padStart(2, "0");
+    const paddedNextYear = String(nextYear).padStart(4, "0");
+
+    return {
+      startRange: `${paddedYear}-${paddedMonth}-01`,
+      endRange: `${paddedNextYear}-${paddedNextMonth}-01`,
+    };
+  }
+
+  return null;
+}
+
+export async function getHistoricalCalls(req, res) {
+  try {
+    const { year, month, day, status, patientAlias } = req.body;
+
+    // Ensure at least one filter is provided
+    if (!year && !month && !day && !status && !patientAlias) {
+      return res.status(400).json({ message: "No filter criteria provided." });
+    }
+
+    const filterCriteria = {};
+
+    // Optional: restrict to logged-in provider
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "Unauthorized." });
+    }
+    filterCriteria.provider_id = req.user.id;
+
+    // --- Date filtering ---
+    const date = {};
+    if (year) date.year = year;
+    if (month) date.month = month;
+    if (day) date.day = day;
+
+    const dateQueryParameters = formatDateQuery(date);
+    if (dateQueryParameters) {
+      if (dateQueryParameters.exactDate)
+        filterCriteria.exactDate = dateQueryParameters.exactDate;
+      if (dateQueryParameters.startRange)
+        filterCriteria.startRange = dateQueryParameters.startRange;
+      if (dateQueryParameters.endRange)
+        filterCriteria.endRange = dateQueryParameters.endRange;
+    }
+
+    // --- Status validation ---
+    const validStatus = [
+      "completed",
+      "no_show",
+      "cancelled_by_provider",
+      "cancelled_by_patient",
+    ];
+    if (status) {
+      if (!validStatus.includes(status)) {
+        return res
+          .status(400)
+          .json({ message: "Invalid visit status provided." });
+      }
+      filterCriteria.status = status;
+    }
+
+    // --- Alias filtering ---
+    if (patientAlias) {
+      filterCriteria.alias = patientAlias;
+    }
+
+    // Retrieve calls
+    const retrievedCalls = await retrieveCalls(filterCriteria);
+
+    if (!retrievedCalls) {
+      return res
+        .status(400)
+        .json({ message: "Could not retrieve calls at this time." });
+    }
+
+    return res.status(200).json({
+      calls: retrievedCalls,
+      message:
+        retrievedCalls.length > 0
+          ? "Calls found."
+          : "No calls found that match the provided criteria.",
+    });
+  } catch (error) {
+    console.error("Error retrieving calls:", error);
+    return res
+      .status(500)
+      .json({ message: "Server error while retrieving calls." });
   }
 }
