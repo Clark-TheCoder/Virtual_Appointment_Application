@@ -6,6 +6,7 @@ import {
   getScheduledCalls,
   getCallData,
   updateCallData,
+  getHistoricalCalls,
 } from "../controllers/call/callController.js";
 const router = express.Router();
 
@@ -36,6 +37,8 @@ router.get("/load_calls", authenticateToken, getScheduledCalls);
 router.get("/call_history", (req, res) => {
   res.render("provider/callHistory");
 });
+
+router.post("/call_history", authenticateToken, getHistoricalCalls);
 
 //doctor call view
 router.get("/doctor_call_view", (req, res) => {
