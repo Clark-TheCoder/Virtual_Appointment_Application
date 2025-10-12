@@ -5,7 +5,6 @@ export function createJoinButton(call) {
   joinButton.classList.add("button");
   joinButton.textContent = "Join Call";
   joinButton.addEventListener("click", () => {
-    console.log("join");
     showPreCallPopup();
   });
   return joinButton;
