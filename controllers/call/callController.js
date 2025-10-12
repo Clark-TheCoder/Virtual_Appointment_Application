@@ -299,3 +299,25 @@ export async function getHistoricalCalls(req, res) {
       .json({ message: "Server error while retrieving calls." });
   }
 }
+
+export async function startCall(req, res) {
+  const { access_token } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const updatedCallStatus = await updateCallStatus(
+      access_token,
+      userId,
+      "in_progress"
+    );
+    if (updatedCallStatus) {
+      return res.status(200).json({ success: true });
+    } else {
+      return res.status(404).json({ succes: false });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ succes: false, message: "Server error while joining call." });
+  }
+}

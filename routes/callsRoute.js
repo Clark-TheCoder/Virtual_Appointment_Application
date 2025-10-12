@@ -7,6 +7,7 @@ import {
   getCallData,
   updateCallData,
   getHistoricalCalls,
+  startCall,
 } from "../controllers/call/callController.js";
 const router = express.Router();
 
@@ -47,5 +48,8 @@ router.get("/doctor_call_view", (req, res) => {
 
 //delete call
 router.delete("/deleteCall", authenticateToken, deleteCall);
+
+//doctor starts call
+router.post("/doctor/startCall", authenticateToken, startCall);
 
 export default router;
