@@ -49,7 +49,7 @@ function updateAudioUIOn() {
 }
 
 // Update UI when audio is OFF
-function updateAudioUIOff() {
+export function updateAudioUIOff() {
   audioImg.src = "/media/provider/videoIcons/volume_off.png";
   audioButton.classList.remove("selected");
   localAudio.style.display = "none";

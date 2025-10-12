@@ -2,7 +2,7 @@ import {
   activateCamera,
   getCamera,
   toggleCamera,
-  cameraStream, // make sure you export this from cameraController.js
+  cameraStream,
 } from "../../../../media/cameraController.js";
 
 const cameraButton = document.getElementById("camera_button");
@@ -21,13 +21,13 @@ async function toggleCameraButton() {
     await activateCamera();
     toggleCamera();
     showCameraStream(localVideo);
-    updateCameraUIOn(cameraButton, cameraImg, cameraPlaceholder, localVideo);
+    updateCameraUIOn();
   } else {
     const trackStatus = toggleCamera();
     if (trackStatus === true) {
-      updateCameraUIOn(cameraButton, cameraImg, cameraPlaceholder, localVideo);
+      updateCameraUIOn();
     } else {
-      updateCameraUIOff(cameraButton, cameraImg, cameraPlaceholder, localVideo);
+      updateCameraUIOff();
     }
   }
 }
@@ -48,7 +48,7 @@ function updateCameraUIOn() {
 }
 
 // Update UI when camera is OFF
-function updateCameraUIOff() {
+export function updateCameraUIOff() {
   cameraImg.src = "/media/provider/videoIcons/camera_off.png";
   cameraPlaceholder.style.display = "flex";
   cameraButton.classList.remove("selected");
