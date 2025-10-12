@@ -1,5 +1,5 @@
-import { loadScheduledCalls } from "./loadCalls.js";
+import { loadScheduledCalls } from "./api/loadCalls.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadScheduledCalls();
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadScheduledCalls();
 });

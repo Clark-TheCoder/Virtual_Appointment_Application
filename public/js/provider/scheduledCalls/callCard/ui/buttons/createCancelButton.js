@@ -1,4 +1,4 @@
-import { deleteCall } from "../../api/deleteCall.js";
+import { deleteCall } from "../../../api/deleteCall.js";
 
 export function createCancelButton(call) {
   const cancelButton = document.createElement("button");
