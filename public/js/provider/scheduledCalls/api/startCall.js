@@ -1,11 +1,21 @@
+import { getCurrentCall } from "../currentCall.js";
+
 export async function startCall() {
   try {
-    const response = await fetch("/call/startCall", {
+    const response = await fetch("/call/doctor/startCall", {
       method: "POST",
+      headers: { "Content-type": "application/json" },
       credentials: "include",
+      body: JSON.stringify({ access_token: getCurrentCall.access_token }),
     });
-    console.log("hi");
+
+    const data = await response.json();
+    if (!response.ok) {
+      return false;
+    }
+
+    return data.success;
   } catch (error) {
-    alert("Could not begin call at this time.");
+    return false;
   }
 }
