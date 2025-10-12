@@ -1,4 +1,4 @@
-import { createCallCard } from "./callCard/createCallCard.js";
+import { createCallCard } from "../callCard/createCallCard.js";
 
 const errorMessage = document.getElementById("error_message_div");
 const errorMesageText = document.getElementById("error_message");
