@@ -1,14 +1,5 @@
-import {
-  audioStream,
-  deactivateAudio,
-} from "../../../../media/audioController.js";
-import {
-  cameraStream,
-  deactivateCamera,
-} from "../../../../media/cameraController.js";
 import { startCall } from "../../api/startCall.js";
-import { updateAudioUIOff } from "./audioButton.js";
-import { updateCameraUIOff } from "./cameraButton.js";
+import { getCurrentCall } from "../../currentCall.js";
 
 export function createJoinButton() {
   const joinButton = document.getElementById("join_call_button");
@@ -16,22 +7,21 @@ export function createJoinButton() {
 }
 
 async function joinCall() {
-  // api calls
-  let isCallStarted = await startCall();
+  let callInfo = getCurrentCall;
 
-  if (isCallStarted) {
-    if (cameraStream) {
-      deactivateCamera();
-      // update the UI to show the camera is turned off (good if there are any delays)
-      updateCameraUIOff();
+  // If the call is already in progress, just join the call
+  if (callInfo.status === "in_progress") {
+    window.location.href = "/call/provider/liveCall";
+  }
+
+  // If this is the first join, start the call
+  if (callInfo.status === "generated") {
+    // Start the call
+    let isCallStarted = await startCall();
+    if (isCallStarted) {
+      window.location.href = "/call/provider/liveCall";
+    } else {
+      alert("Could not begin call at this time.");
     }
-    if (audioStream) {
-      deactivateAudio();
-      // update the UI to show the audio is turned off (good if there are any delays)
-      updateAudioUIOff();
-    }
-    window.location.href = "/incall";
-  } else {
-    alert("Could not begin call at this time.");
   }
 }
