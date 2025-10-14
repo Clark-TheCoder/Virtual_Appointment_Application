@@ -18,9 +18,9 @@ export function createCameraButton() {
 
 async function toggleCameraButton() {
   if (!getCamera()) {
-    await activateCamera();
+    const stream = await activateCamera();
     toggleCamera();
-    showCameraStream(localVideo);
+    showCameraStream(stream);
     updateCameraUIOn();
   } else {
     const trackStatus = toggleCamera();
@@ -32,10 +32,16 @@ async function toggleCameraButton() {
   }
 }
 
-// Attach camera stream to the video element and start playback
-function showCameraStream() {
-  localVideo.srcObject = cameraStream;
-  localVideo.onloadedmetadata = () => localVideo.play();
+function showCameraStream(stream) {
+  const activeStream = stream || cameraStream;
+  if (!activeStream) {
+    alert("Cannot access camera at this time.");
+    return;
+  }
+  localVideo.srcObject = activeStream;
+  localVideo.onloadedmetadata = () => {
+    localVideo.play();
+  };
   localVideo.style.display = "block";
 }
 

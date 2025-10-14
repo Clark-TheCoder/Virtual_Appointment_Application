@@ -16,14 +16,13 @@ export function createAudioButton() {
 
 async function toggleAudioButton() {
   if (!getAudio()) {
-    await activateAudio();
+    let stream = await activateAudio();
     toggleAudio();
-    showAudioStream();
+    showAudioStream(stream);
     updateAudioUIOn();
   } else {
     const trackStatus = toggleAudio();
     if (trackStatus === true) {
-      showAudioStream();
       updateAudioUIOn();
     } else {
       updateAudioUIOff();
@@ -31,26 +30,25 @@ async function toggleAudioButton() {
   }
 }
 
-// Attach audio stream to the <audio> element and play it
-function showAudioStream() {
-  if (audioStream) {
-    localAudio.srcObject = audioStream;
-    localAudio.onloadedmetadata = () => localAudio.play();
-    localAudio.volume = 0.3;
-    localAudio.style.display = "block";
+function showAudioStream(stream) {
+  let activeStream = (localAudio.srcObject = stream || audioStream);
+  if (!activeStream) {
+    alert("Cannot access your microphone at this time.");
+    return;
   }
+  localAudio.onloadedmetadata = () => localAudio.play();
+  localAudio.volume = 0.3;
+  localAudio.style.display = "block";
 }
 
 // Update UI when audio is ON
-function updateAudioUIOn() {
+export function updateAudioUIOn() {
   audioImg.src = "/media/provider/videoIcons/volume_on.png";
   audioButton.classList.add("selected");
-  localAudio.style.display = "block";
 }
 
 // Update UI when audio is OFF
 export function updateAudioUIOff() {
   audioImg.src = "/media/provider/videoIcons/volume_off.png";
   audioButton.classList.remove("selected");
-  localAudio.style.display = "none";
 }
