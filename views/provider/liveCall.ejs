@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Call</title>
+
+  <link rel="stylesheet" href="/css/provider/providerLiveCall.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="call_ui">
+    <section class="video_ui_container">
+      <aside class="localVideo_container" aria-label="Your video preview">
+        <div class="localVideo"><img src="/media/provider/videoIcons/stethoscope.png" alt="Your video placeholder" /></div>
+        <video id="localVideo" class="localVideo_on hidden" autoplay muted playsinline></video>
+        <audio id="localAudio" autoplay playsinline style="display:none"></audio>
+      </aside>
+
+
+      <section class="video_container" aria-label="Patient video">
+        <div class="video">
+          <video id="remoteVideo" class="patient_video_on hidden" autoplay playsinline></video>
+          <img id="remotePlaceholder" src="/media/provider/videoIcons/patient_icon.png" alt="Patient video placeholder" />
+        </div>
+        <audio id="remoteAudio" autoplay playsinline style="display:none"></audio>
+      </section>
+
+      <div class="video_buttons" aria-label="Call controls">
+        <button id="incall_audio_button" aria-pressed="false" title="Toggle Microphone">
+          <img id="incall_volume_image" src="/media/provider/videoIcons/volume_off.png" alt=" Microphone off" />
+        </button>
+        <button id="incall_camera_button" aria-pressed="false" title="Toggle Camera">
+          <img id="incall_camera_image" src="/media/provider/videoIcons/camera_off.png" alt="Camera off" />
+        </button>
+        <button id="end_call_button" title="End Call">
+          <img src="/media/provider/videoIcons/end_call.png" alt="End call" />
+        </button>
+      </div>
+    </section>
+
+    <button id="notes_button" aria-expanded="false" aria-controls="notes_container" title="Toggle Notes">
+      <img src="/media/provider/videoIcons/menu-dots-vertical.png" alt="Notes menu" />
+    </button>
+
+    <aside id="notes_container" class="hidden" role="region" aria-label="Call notes">
+      <div class="notes">
+        <section id="call_summary" class="input_div">
+          <header class="section_label_div">
+            <h3>Visit Summary</h3>
+          </header>
+          <div class="section_inputs_div">
+            <textarea class="freetext" id="summary_textarea" placeholder="Summary of discussion with patient..." aria-label="Visit Summary"></textarea>
+          </div>
+        </section>
+
+        <section id="plan" class="input_div">
+          <header class="section_label_div">
+            <h3>Care Plan</h3>
+          </header>
+          <div class="section_inputs_div">
+            <textarea class="freetext" id="plan_textarea" placeholder="Care plan details, prescriptions, consultations..." aria-label="Care Plan"></textarea>
+          </div>
+        </section>
+
+        <section id="notes" class="input_div">
+          <header class="section_label_div">
+            <h3>Additional Notes</h3>
+          </header>
+          <div class="section_inputs_div">
+            <textarea class="freetext" id="notes_textarea" placeholder="Enter notes here..." aria-label="Additional Notes"></textarea>
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <!--
+
+    <link rel="stylesheet" href="/css/popup.css" />
+    <div id="page_overlay" class="hidden"></div>
+    <dialog id="popup" role="dialog" aria-modal="true" aria-labelledby="popupTitle" class="hidden">
+      <h1 id="popupTitle">End Call?</h1>
+      <p>How would you like to proceed?</p>
+      <div class="popup-button-container">
+        <button id="endAndChart_button" class="btn-primary">End and Chart Now</button>
+        <button id="endNoChart_button" class="btn-secondary">End and Chart Later</button>
+        <button id="return_button" class="btn-tertiary">Return to Call</button>
+      </div>
+    </dialog>
+    
+    <script src="/socket.io/socket.io.js"></script>
+-->
+    <script type="module" src="/js/provider/liveCall/index.js"></script>
+  </div>
+
+</body>
+
+</html>
