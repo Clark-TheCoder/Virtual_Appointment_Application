@@ -17,6 +17,7 @@ export async function activateAudio() {
       audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       audioTrack = audioStream.getAudioTracks()[0];
       audioTrack.enabled = false; // start muted
+      console.log("Starting new audio stream...");
     } catch (err) {
       console.error("Error activating microphone:", err);
       audioStream = null;
@@ -48,6 +49,7 @@ export function toggleAudio() {
 
   audioTrack.enabled = !audioTrack.enabled;
   sessionStorage.setItem("audioSetting", audioTrack.enabled);
+  console.log(audioTrack);
   return audioTrack.enabled;
 }
 

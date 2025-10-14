@@ -17,8 +17,8 @@ export async function activateCamera() {
       cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
       cameraTrack = cameraStream.getVideoTracks()[0];
       cameraTrack.enabled = false; // start disabled
+      console.log("Starting new camera stream...");
     } catch (err) {
-      console.error("Error activating camera:", err);
       cameraStream = null;
       cameraTrack = null;
     }
@@ -48,6 +48,7 @@ export function toggleCamera() {
 
   cameraTrack.enabled = !cameraTrack.enabled;
   sessionStorage.setItem("cameraSetting", cameraTrack.enabled);
+  console.log(cameraTrack);
   return cameraTrack.enabled;
 }
 
