@@ -41,15 +41,15 @@ router.get("/call_history", (req, res) => {
 
 router.post("/call_history", authenticateToken, getHistoricalCalls);
 
-//doctor call view
-router.get("/doctor_call_view", (req, res) => {
-  res.render("doctor_call_view");
-});
-
 //delete call
 router.delete("/deleteCall", authenticateToken, deleteCall);
 
-//doctor starts call
+//provider starts call
 router.post("/doctor/startCall", authenticateToken, startCall);
+
+//provider joins call
+router.get("/provider/liveCall", (req, res) => {
+  res.render("provider/liveCall");
+});
 
 export default router;
