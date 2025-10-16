@@ -54,7 +54,7 @@ export async function deleteCallById(access_token, userId) {
 export async function getCall(access_token, userId) {
   try {
     const [rows] = await pool.execute(
-      `SELECT call_notes, status FROM calls WHERE access_token = ? AND provider_id = ?`,
+      `SELECT call_notes, status, access_token FROM calls WHERE access_token = ? AND provider_id = ?`,
       [access_token, userId]
     );
 
@@ -94,6 +94,7 @@ export async function updateCallStatus(access_token, userId, newStatus) {
       `UPDATE calls SET status = ? WHERE access_token = ? AND provider_id = ?`,
       [newStatus, access_token, userId]
     );
+    console.log([result]);
     return result.affectedRows > 0;
   } catch (error) {
     throw new Error(`Error in updateCallStatus: ${error.message}`);
