@@ -15,9 +15,9 @@ export async function getCallData(access_token) {
       };
       return call;
     } else {
-      alert("Cannot get call data at this time.");
+      alert("Cannot get call notes at this time.");
     }
   } catch (error) {
-    alert("Server error. Please try again later.");
+    alert("Unable to get call notes due to server error.");
   }
 }
