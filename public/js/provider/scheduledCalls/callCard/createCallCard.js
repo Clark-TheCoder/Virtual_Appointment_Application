@@ -1,6 +1,6 @@
-import { createCancelButton } from "./ui/buttons/createCancelButton.js";
-import { createChartButton } from "./ui/buttons/createChartButton.js";
-import { createJoinButton } from "./ui/buttons/createJoinButton.js";
+import { createCancelButton } from "./buttons/createCancelButton.js";
+import { createChartButton } from "./buttons/createChartButton.js";
+import { createJoinButton } from "./buttons/createJoinButton.js";
 
 export function createCallCard(call) {
   const callDiv = document.createElement("div");
