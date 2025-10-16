@@ -1,5 +1,5 @@
-import { setCurrentCall } from "../../../currentCall.js";
-import { showPreCallPopup } from "../../../precall/createPreCallPopup.js";
+import { setCurrentCall } from "../../currentCall.js";
+import { showPreCallPopup } from "../../precall/createPreCallPopup.js";
 
 export function createJoinButton(call) {
   const joinButton = document.createElement("button");
