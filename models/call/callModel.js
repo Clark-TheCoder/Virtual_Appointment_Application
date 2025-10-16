@@ -88,6 +88,20 @@ export async function updateCallNotes(access_token, userId, formData) {
   }
 }
 
+export async function updateCallStartTime(access_token, userId) {
+  try {
+    const [result] = await pool.query(
+      `UPDATE calls 
+       SET call_start_time = NOW()
+       WHERE access_token = ? AND provider_id = ?`,
+      [access_token, userId]
+    );
+    return result;
+  } catch (error) {
+    throw new Error(`Error updating call start time: ${error.message}`);
+  }
+}
+
 export async function updateCallStatus(access_token, userId, newStatus) {
   try {
     const [result] = await pool.execute(
