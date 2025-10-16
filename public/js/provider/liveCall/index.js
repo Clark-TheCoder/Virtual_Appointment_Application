@@ -4,26 +4,53 @@ import { toggleAudioButton } from "./callFunctionality/buttons/liveAudioButton.j
 import { initButtons } from "./callFunctionality/buttons/initButtons.js";
 import { toggleCameraButton } from "./callFunctionality/buttons/liveCameraButton.js";
 
-import { setupSidebarToggle } from "./callFunctionality/sidebarFunctionality.js";
+import { toggleSidebar } from "./callFunctionality/sidebar/toggleSideBar.js";
+import { getNotes } from "./api/getNotes.js";
+import { getCallData } from "../../api/fetchCallData.js";
+import { getCurrentCall, setCurrentCall } from "./currentCall.js";
+
+const cameraSettings = sessionStorage.getItem("cameraSetting");
+const audioSettings = sessionStorage.getItem("audioSetting");
+const access_token = sessionStorage.getItem("access_token");
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Set up UI functionality
-  setupSidebarToggle();
-  // setupCallControls(); // will be initButtons
+  // Set call
+  let callData = await getCallData(access_token);
+  setCurrentCall(callData);
+  let call = getCurrentCall;
+
+  // Set up call buttons
   initButtons();
 
+  // Get the call's notes and place in sidebar
+  toggleSidebar();
+  getNotes();
+
   // Set inital camera and audio settings
-  if (sessionStorage.getItem("cameraSetting") === "true") {
+  if (cameraSettings === "true") {
     toggleCameraButton(); // Creates new stream and toggles button to match
   }
-  if (sessionStorage.getItem("audioSetting") === "true") {
+  if (audioSettings === "true") {
     toggleAudioButton(); // Creates new stream and toggles button to match
   }
-
-  // get the call's notes
 });
 
 window.addEventListener("beforeunload", () => {
   deactivateAudio();
   deactivateCamera();
+  const access_token = sessionStorage.getItem("access_token");
+  const newNotes = {
+    summary: document.getElementById("summary_textarea").value.trim(),
+    plan: document.getElementById("plan_textarea").value.trim(),
+    notes: document.getElementById("notes_textarea").value.trim(),
+  };
+
+  fetch("/call/save_visit_summary", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ access_token, status: call.status, newNotes }),
+    keepalive: true,
+  });
 });
