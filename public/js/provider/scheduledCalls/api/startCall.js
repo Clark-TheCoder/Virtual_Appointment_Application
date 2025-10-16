@@ -14,7 +14,7 @@ export async function startCall() {
       return false;
     }
 
-    return data.success;
+    return data;
   } catch (error) {
     return false;
   }
