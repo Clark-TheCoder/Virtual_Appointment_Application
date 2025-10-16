@@ -1,3 +1,24 @@
+// import { getCallData } from "../../../api/fetchCallData.js";
+
+// export async function getNotes() {
+//   const summaryTextArea = document.getElementById("summary_textarea");
+//   const planTextArea = document.getElementById("plan_textarea");
+//   const notesTextArea = document.getElementById("notes_textarea");
+
+//   let callData = await getCallData(sessionStorage.getItem("access_token"));
+
+//   if (!callData) {
+//     summaryTextArea.value = "Summary of discussion with patient...";
+//     planTextArea.value = "Care plan details, prescriptions, consultations...";
+//     notesTextArea.value = "Enter notes here...";
+//     return;
+//   }
+
+//   summaryTextArea.value = callData.notes.summary;
+//   planTextArea.value = callData.notes.plan;
+//   notesTextArea.value = callData.notes.notes;
+// }
+
 import { getCallData } from "../../../api/fetchCallData.js";
 
 const summaryTextArea = document.getElementById("summary_textarea");
