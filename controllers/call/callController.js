@@ -10,6 +10,7 @@ import {
   updateCallNotes,
   updateCallStatus,
   retrieveCalls,
+  updateCallStartTime,
 } from "../../models/call/callModel.js";
 import { stat } from "fs";
 dotenv.config();
@@ -95,14 +96,26 @@ export async function getScheduledCalls(req, res) {
 
   try {
     const todaysCalls = await getCurrentCalls(userId);
+    console.log("Calls retrieved:", todaysCalls.length);
 
-    res.status(200).json({
-      message:
-        todaysCalls.length === 0 ? "No calls scheduled for today." : "Success",
+    if (!todaysCalls || todaysCalls.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No calls scheduled for today.",
+        calls: [],
+      });
+    }
+
+    // ✅ Return calls array so frontend can render it
+    return res.status(200).json({
+      success: true,
+      message: "Retrieved today's calls.",
       calls: todaysCalls,
     });
   } catch (error) {
-    res.status(500).json({
+    console.error("Error in getScheduledCalls:", error);
+    return res.status(500).json({
+      success: false,
       message: "Failed to retrieve today's calls. Please try again later.",
       error: error.message,
       calls: [],
@@ -167,29 +180,36 @@ export async function updateCallData(req, res) {
   const userId = req.user?.id;
 
   if (!access_token || !status || !newNotes) {
-    return res
-      .status(400)
-      .json({ message: "Unable to submit form with the current criteria." });
+    return res.status(400).json({
+      success: false,
+      message: "Unable to submit form with the current criteria.",
+    });
   }
 
   try {
-    let notesUpdated = updateCallNotes(access_token, userId, newNotes);
+    let notesUpdated = await updateCallNotes(access_token, userId, newNotes);
     if (!notesUpdated) {
-      return res.status(400).json({ message: "Failed to update notes." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Failed to update notes." });
     }
 
-    let statusUpdated = updateCallStatus(access_token, userId, status);
+    let statusUpdated = await updateCallStatus(access_token, userId, status);
     if (!statusUpdated) {
-      return res.status(400).json({ message: "Failed to update status." });
+      return res
+        .status(400)
+        .json({ success: false, message: "Failed to update status." });
     }
 
     return res.status(200).json({
+      success: true,
       message: "Visit summary and call status updated successfully.",
     });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Could not get call notes at this time." });
+    return res.status(500).json({
+      success: false,
+      message: "Could not get call notes at this time.",
+    });
   }
 }
 
@@ -304,20 +324,59 @@ export async function startCall(req, res) {
   const { access_token } = req.body;
   const userId = req.user.id;
 
+  if (!access_token || !userId) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing access token or user ID.",
+    });
+  }
+
   try {
-    const updatedCallStatus = await updateCallStatus(
+    const statusUpdated = await updateCallStatus(
       access_token,
       userId,
       "in_progress"
     );
-    if (updatedCallStatus) {
-      return res.status(200).json({ success: true });
-    } else {
-      return res.status(404).json({ succes: false });
+
+    if (!statusUpdated) {
+      return res.status(404).json({
+        success: false,
+        message: "Failed to update call status or call not found.",
+      });
     }
+
+    const startTimeUpdated = await updateCallStartTime(access_token, userId);
+
+    if (startTimeUpdated.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Failed to update call start time.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Call started successfully.",
+    });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ succes: false, message: "Server error while joining call." });
+    console.error("Error starting call:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while starting call.",
+    });
+  }
+}
+
+export async function endCallTime(res, req) {
+  const { access_token } = req.body;
+  const userId = req.user.id;
+
+  try {
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Server error while saving the time the call was ended.",
+    });
   }
 }
