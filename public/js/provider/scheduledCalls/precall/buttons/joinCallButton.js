@@ -8,9 +8,11 @@ export function createJoinButton() {
 
 async function joinCall() {
   let callInfo = getCurrentCall;
+  console.log(callInfo);
 
   // If the call is already in progress, just join the call
   if (callInfo.status === "in_progress") {
+    sessionStorage.setItem("access_token", callInfo.access_token);
     window.location.href = "/call/provider/liveCall";
   }
 
@@ -19,6 +21,7 @@ async function joinCall() {
     // Start the call
     let isCallStarted = await startCall();
     if (isCallStarted) {
+      sessionStorage.setItem("access_token", callInfo.access_token);
       window.location.href = "/call/provider/liveCall";
     } else {
       alert("Could not begin call at this time.");
