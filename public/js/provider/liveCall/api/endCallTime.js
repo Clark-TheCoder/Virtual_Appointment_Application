@@ -6,7 +6,11 @@ export async function endCallTime(access_token) {
       credentials: "include",
       body: JSON.stringify({ access_token }),
     });
-    return response.ok;
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
     return false;
   }
