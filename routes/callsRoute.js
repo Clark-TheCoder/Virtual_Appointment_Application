@@ -8,6 +8,7 @@ import {
   updateCallData,
   getHistoricalCalls,
   startCall,
+  endCallTime,
 } from "../controllers/call/callController.js";
 const router = express.Router();
 
@@ -51,5 +52,8 @@ router.post("/doctor/startCall", authenticateToken, startCall);
 router.get("/provider/liveCall", (req, res) => {
   res.render("provider/liveCall");
 });
+
+// End call time
+router.patch("/end_call_time", authenticateToken, endCallTime);
 
 export default router;
