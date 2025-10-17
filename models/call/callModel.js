@@ -102,6 +102,41 @@ export async function updateCallStartTime(access_token, userId) {
   }
 }
 
+export async function updateCallEndTime(access_token, userId) {
+  try {
+    await pool.query(
+      `UPDATE calls 
+       SET call_end_time = NOW()
+       WHERE access_token = ? AND provider_id = ?`,
+      [access_token, userId]
+    );
+
+    const [rows] = await pool.query(
+      `SELECT TIMESTAMPDIFF(MINUTE, call_start_time, call_end_time) AS duration_minutes
+       FROM calls
+       WHERE access_token = ? AND provider_id = ?`,
+      [access_token, userId]
+    );
+
+    if (rows.length === 0) {
+      throw new Error("Call not found when calculating duration.");
+    }
+
+    const duration = rows[0].duration_minutes;
+
+    await pool.query(
+      `UPDATE calls 
+       SET duration_minutes = ?
+       WHERE access_token = ? AND provider_id = ?`,
+      [duration, access_token, userId]
+    );
+
+    return duration;
+  } catch (error) {
+    throw new Error(`Error updating call end time: ${error.message}`);
+  }
+}
+
 export async function updateCallStatus(access_token, userId, newStatus) {
   try {
     const [result] = await pool.execute(

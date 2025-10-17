@@ -11,6 +11,7 @@ import {
   updateCallStatus,
   retrieveCalls,
   updateCallStartTime,
+  updateCallEndTime,
 } from "../../models/call/callModel.js";
 import { stat } from "fs";
 dotenv.config();
@@ -253,7 +254,6 @@ export async function getHistoricalCalls(req, res) {
 
     const filterCriteria = {};
 
-    // Optional: restrict to logged-in provider
     if (!req.user || !req.user.id) {
       return res.status(401).json({ message: "Unauthorized." });
     }
@@ -275,7 +275,6 @@ export async function getHistoricalCalls(req, res) {
         filterCriteria.endRange = dateQueryParameters.endRange;
     }
 
-    // --- Status validation ---
     const validStatus = [
       "completed",
       "no_show",
@@ -291,7 +290,6 @@ export async function getHistoricalCalls(req, res) {
       filterCriteria.status = status;
     }
 
-    // --- Alias filtering ---
     if (patientAlias) {
       filterCriteria.alias = patientAlias;
     }
@@ -367,16 +365,30 @@ export async function startCall(req, res) {
   }
 }
 
-export async function endCallTime(res, req) {
+export async function endCallTime(req, res) {
   const { access_token } = req.body;
   const userId = req.user.id;
 
+  if (!access_token || !userId) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing access token or user ID.",
+    });
+  }
+
   try {
-    return res.status(200).json({ success: true });
+    const durationMinutes = await updateCallEndTime(access_token, userId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Call ended successfully.",
+      duration_minutes: durationMinutes,
+    });
   } catch (error) {
+    console.error("Error ending call:", error);
     return res.status(500).json({
       success: false,
-      message: "Server error while saving the time the call was ended.",
+      message: "Server error while ending call.",
     });
   }
 }
