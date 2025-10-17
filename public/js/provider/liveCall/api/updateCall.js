@@ -31,8 +31,7 @@ export async function updateCall(status) {
 
     let data = await response.json();
     if (response.ok) {
-      console.log(data);
-      return data.success;
+      return data;
     } else {
       alert("Cannot save call notes/status at this time.");
       return false;
