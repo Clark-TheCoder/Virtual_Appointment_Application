@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import crypto from "crypto";
-import { Resend } from "resend";
+
 import dotenv from "dotenv";
 import {
   createNewCall,
@@ -15,6 +15,8 @@ import {
   validateCall,
 } from "../../models/call/callModel.js";
 import { stat } from "fs";
+import { emailCallLink } from "../../services/mailer/emailService.js";
+import { formatDateQuery } from "../../utils/formatDateQuery.js";
 dotenv.config();
 
 export async function createCall(req, res) {
@@ -65,28 +67,6 @@ export async function createCall(req, res) {
     res.status(500).json({
       message: "Cannot generate link at this time. Sign back in and try again.",
     });
-  }
-}
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-async function emailCallLink(patientEmail, link) {
-  try {
-    const data = await resend.emails.send({
-      from: "onboarding@resend.dev",
-      to: patientEmail,
-      subject: "Your Virtual Appointment Link",
-      html: `
-        <p>Hello,</p>
-        <p>Your secure video call link is below. Click the link to join:</p>
-        <p><a href="${link}">${link}</a></p>
-        <p>This link is private. Do not share it.</p>
-      `,
-    });
-
-    return data;
-  } catch (error) {
-    console.error("Failed to send email via Resend.");
-    return { error };
   }
 }
 
@@ -214,35 +194,6 @@ export async function updateCallData(req, res) {
       message: "Could not get call notes at this time.",
     });
   }
-}
-
-export function formatDateQuery(date) {
-  const { year, month, day } = date;
-
-  const paddedYear = String(year).padStart(4, "0");
-
-  if (year && month && day) {
-    const paddedMonth = String(month).padStart(2, "0");
-    const paddedDay = String(day).padStart(2, "0");
-    return { exactDate: `${paddedYear}-${paddedMonth}-${paddedDay}` };
-  }
-
-  if (year && month && !day) {
-    const numericMonth = Number(month);
-    let nextMonth = numericMonth === 12 ? 1 : numericMonth + 1;
-    let nextYear = numericMonth === 12 ? Number(year) + 1 : Number(year);
-
-    const paddedMonth = String(numericMonth).padStart(2, "0");
-    const paddedNextMonth = String(nextMonth).padStart(2, "0");
-    const paddedNextYear = String(nextYear).padStart(4, "0");
-
-    return {
-      startRange: `${paddedYear}-${paddedMonth}-01`,
-      endRange: `${paddedNextYear}-${paddedNextMonth}-01`,
-    };
-  }
-
-  return null;
 }
 
 export async function getHistoricalCalls(req, res) {
