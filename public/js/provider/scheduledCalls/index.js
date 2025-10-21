@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Clean up video and audio streams if there are any
 window.addEventListener("pageshow", () => {
-  if (getCamera()) {
+  if (getCamera) {
     deactivateCamera();
     updateCameraUIOff();
   }
