@@ -198,3 +198,22 @@ export async function retrieveCalls(searchFields) {
     throw new Error(`Error in retrieveCalls: ${error.message}`);
   }
 }
+
+export async function validateCall(access_token) {
+  try {
+    const [rows] = await pool.query(
+      `SELECT status 
+       FROM calls 
+       WHERE access_token = ? 
+         AND call_end_time IS NULL 
+         AND status IN ('in_progress', 'generated', 'completed_not_charted', 'completed')`,
+      [access_token]
+    );
+
+    if (rows.length === 0) return null;
+
+    return rows[0].status;
+  } catch (error) {
+    throw new Error(`Error in validateCall: ${error.message}`);
+  }
+}
