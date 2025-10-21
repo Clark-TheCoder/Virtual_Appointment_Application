@@ -12,6 +12,7 @@ import {
   retrieveCalls,
   updateCallStartTime,
   updateCallEndTime,
+  validateCall,
 } from "../../models/call/callModel.js";
 import { stat } from "fs";
 dotenv.config();
@@ -34,6 +35,7 @@ export async function createCall(req, res) {
 
   try {
     const link = `http://localhost:3000/call/join/${access_token}`;
+    //const link = `https://sophie-unwoeful-ira.ngrok-free.dev/call/join/${access_token}`;
 
     if (email) {
       const sentEmail = await emailCallLink(email, link);
@@ -390,5 +392,24 @@ export async function endCallTime(req, res) {
       success: false,
       message: "Server error while ending call.",
     });
+  }
+}
+
+export async function validatePatient(req, res) {
+  const access_token = req.params.access_token;
+  try {
+    const validCall = await validateCall(access_token);
+
+    if (!validCall) {
+      return res
+        .status(403)
+        .json({ success: false, message: "Access denied or call not found." });
+    } else {
+      return res
+        .status(200)
+        .json({ success: true, status: validCall, message: "Call found." });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 }
