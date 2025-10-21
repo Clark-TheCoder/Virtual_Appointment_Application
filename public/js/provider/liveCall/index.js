@@ -5,9 +5,9 @@ import { initButtons } from "./callFunctionality/buttons/initButtons.js";
 import { toggleCameraButton } from "./callFunctionality/buttons/liveCameraButton.js";
 
 import { toggleSidebar } from "./callFunctionality/sidebar/toggleSideBar.js";
-import { getNotes } from "./api/getNotes.js";
 import { getCallData } from "../../api/fetchCallData.js";
 import { getCurrentCall, setCurrentCall } from "./currentCall.js";
+import { getNotes } from "./callFunctionality/sidebar/getNotes.js";
 
 const cameraSettings = sessionStorage.getItem("cameraSetting");
 const audioSettings = sessionStorage.getItem("audioSetting");
@@ -17,13 +17,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Set call
   let callData = await getCallData(access_token);
   setCurrentCall(callData);
-  let call = getCurrentCall;
 
   // Set up call buttons
   initButtons();
 
   // Get the call's notes and place in sidebar
   toggleSidebar();
+  //await getNotes();
   getNotes();
 
   // Set inital camera and audio settings
@@ -50,7 +50,11 @@ window.addEventListener("beforeunload", () => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ access_token, status: call.status, newNotes }),
+    body: JSON.stringify({
+      access_token,
+      status: getCurrentCall.status,
+      newNotes,
+    }),
     keepalive: true,
   });
 });
