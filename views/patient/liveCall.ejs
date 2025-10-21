@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call</title>
+  <link rel="stylesheet" href="/css/general/popup.css" />
+  <link rel="stylesheet" href="/css/general/preCallPopup.css" />
+  <link rel="stylesheet" href="/css/patient/patientLiveCall.css" />
+</head>
+
+<body>
+  <!-- Loading Screen -->
+  <div id="loading_spinner" style="display: none;"></div>
+
+
+  <!-- Waiting Room / End Call Popup -->
+  <div id="page_overlay" style="display: none;"></div>
+  <div id="popup" style="display: none;">
+    <h1 id="popup_message">Please wait—your doctor has not joined the call yet. You will be able to enter the session as soon as they arrive.</h1>
+  </div>
+
+  <!-- Pre-Call Popup -->
+  <div id="pc_page_overlay" style="display: none;"></div>
+  <div id="pc_popup" style="display: none;">
+    <h2>Your clinician has joined the call. You may now enter the session when you are ready.</h2>
+    <div class="settings_container">
+      <div class="video_example">
+        <div class="video_placeholder">
+          <video id="video_preview" autoplay playsinline muted></video>
+          <img id="camera_icon" src="/media/provider/videoIcons/camera-off-2.png" alt="Camera Turned Off">
+        </div>
+      </div>
+      <div class="settings">
+        <h3>Call Settings:</h3>
+        <div class="camera_settings_container">
+          <div class="camera_label_container">
+            <img id="camera_image" src="/media/provider/videoIcons/camera_off.png" alt="Video">
+            <h4>Camera</h4>
+          </div>
+          <button id="camera_button"></button>
+        </div>
+        <div class="audio_settings_container">
+          <div class="audio_label_container">
+            <img id="audio_image" src="/media/provider/videoIcons/volume_off.png" alt="Microphone">
+            <h4>Microphone</h4>
+            <audio id="localAudio" autoplay playsinline style="display:none"></audio>
+          </div>
+          <button id="audio_button"></button>
+        </div>
+      </div>
+    </div>
+    <div class="pc_button_container">
+      <button id="join_call_button" class="enabledButton">Join Call</button>
+    </div>
+  </div>
+
+  <!-- Call UI -->
+  <div id="call_ui" style="display: none;">
+
+    <div class="video_ui_container">
+      <div class="localVideo_container">
+        <div class="localVideo"><img src="/media/provider/videoIcons/patient_icon.png" alt="You"></div>
+        <video id="localVideo" class="localVideo_on hidden" autoplay muted></video>
+      </div>
+
+      <div class="video_container">
+        <div class="video">
+          <video id="remoteVideo" class="doctor_video hidden" autoplay playsinline></video>
+          <img id="remotePlaceholder" src="/media/provider/videoIcons/stethoscope.png" alt="Provider">
+        </div>
+        <audio id="remoteAudio" autoplay playsinline style="display:none"></audio>
+      </div>
+      <div class="video_buttons">
+        <button id="incall_audio_button"><img id="incall_volume_image" src="/media/provider/videoIcons/volume_off.png" alt="Mic"></button>
+        <button id="incall_camera_button"><img id="incall_camera_image" src="/media/provider/videoIcons/camera_off.png" alt="Camera"></button>
+        <button id="end_call_button"><img src="/media/provider/videoIcons/end_call.png" alt="Hang Up"></button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/patient/index.js"></script>
+
+  <!-- 
+  <script src="/socket.io/socket.io.js"></script>
+  -->
+</body>
+
+</html>
