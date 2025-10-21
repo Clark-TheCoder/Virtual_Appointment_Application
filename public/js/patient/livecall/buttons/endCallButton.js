@@ -7,5 +7,6 @@ export async function createEndCallButton() {
   endCallButton.addEventListener("click", async () => {
     deactivateAudio();
     deactivateCamera();
+    window.close();
   });
 }
