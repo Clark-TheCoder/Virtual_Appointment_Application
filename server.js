@@ -3,6 +3,7 @@ import express from "express";
 import http from "http";
 import path from "path";
 import cookieParser from "cookie-parser";
+import { Server as SocketIOServer } from "socket.io";
 
 // Get .env variables
 configDotenv();
@@ -35,6 +36,30 @@ import userRoutes from "./routes/providerRoute.js";
 app.use("/auth", authRoutes);
 app.use("/call", callRoutes);
 app.use("/user", userRoutes);
+
+// Setup Socket.IO
+const io = new SocketIOServer(server);
+io.on("connection", (socket) => {
+  console.log("A user connected to the socket.");
+  socket.on("join-call", ({ roomId }) => {
+    console.log(`A user joined call: ${roomId}`);
+    socket.join(roomId);
+    socket.roomId = roomId;
+    socket.to(roomId).emit("user-joined");
+  });
+  socket.on("offer", ({ roomId, sdp }) => {
+    console.log("Got offer");
+    io.to(roomId).emit("offer", { sdp });
+  });
+  socket.on("answer", ({ roomId, sdp }) => {
+    console.log("Offering answer");
+    io.to(roomId).emit("answer", { sdp });
+  });
+  socket.on("ice-candidate", ({ roomId, candidate }) => {
+    console.log("Got ICE candidate for room:", roomId);
+    socket.to(roomId).emit("ice-candidate", { candidate });
+  });
+});
 
 // Start server
 const PORT = process.env.PORT || 3000;
