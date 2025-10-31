@@ -63,7 +63,8 @@
     <div class="video_ui_container">
       <div class="localVideo_container">
         <div class="localVideo"><img src="/media/provider/videoIcons/patient_icon.png" alt="You"></div>
-        <video id="localVideo" class="localVideo_on hidden" autoplay muted></video>
+        <video id="localVideo" class="localVideo_on hidden" autoplay muted playsinline></video>
+        <audio id="localAudio" autoplay muted playsinline style="display:none"></audio>
       </div>
 
       <div class="video_container">
@@ -83,9 +84,9 @@
 
   <script type="module" src="/js/patient/index.js"></script>
 
-  <!-- 
+
   <script src="/socket.io/socket.io.js"></script>
-  -->
+
 </body>
 
 </html>

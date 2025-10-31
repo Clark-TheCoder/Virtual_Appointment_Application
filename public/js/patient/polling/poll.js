@@ -32,5 +32,5 @@ export async function startPolling() {
       hideWaitingRoom();
       showPreCallPopup();
     }
-  }, 4000);
+  }, 2000);
 }

@@ -8,6 +8,7 @@ import { toggleSidebar } from "./callFunctionality/sidebar/toggleSideBar.js";
 import { getCallData } from "../../api/fetchCallData.js";
 import { getCurrentCall, setCurrentCall } from "./currentCall.js";
 import { getNotes } from "./callFunctionality/sidebar/getNotes.js";
+import { initSocket } from "../../socket/socketHandler.js";
 
 const cameraSettings = sessionStorage.getItem("cameraSetting");
 const audioSettings = sessionStorage.getItem("audioSetting");
@@ -17,6 +18,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Set call
   let callData = await getCallData(access_token);
   setCurrentCall(callData);
+
+  // Initiate the socketHandler
+  initSocket(access_token, true);
 
   // Set up call buttons
   initButtons();
