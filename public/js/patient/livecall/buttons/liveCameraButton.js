@@ -15,6 +15,7 @@ export function createCameraButton() {
 }
 
 export async function toggleCameraButton() {
+  console.log("Toggle camera button");
   if (!getCamera()) {
     const stream = await activateCamera();
     toggleCamera();
@@ -23,6 +24,7 @@ export async function toggleCameraButton() {
   } else {
     const trackStatus = toggleCamera();
     if (trackStatus) {
+      showCameraStream(cameraStream);
       updateCameraUIOn();
     } else {
       updateCameraUIOff();
