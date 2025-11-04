@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/provider/form.css">
+</head>
+
+<body>
+  <div id="nav-placeholder"></div>
+  <div class="form_wrapper">
+    <div class="form_container">
+      <div class="title_container">
+        <h1>Edit Account Details</h1>
+      </div>
+      <form id="editUser_form">
+        <div class="input_div">
+          <input type="text" name="firstname" id="firstname" placeholder="First Name">
+        </div>
+
+        <div class="input_div">
+          <input type="text" name="lastname" id="lastname" placeholder="Last Name">
+        </div>
+
+        <div class="input_div">
+          <input type="email" name="email" id="email" placeholder="Email">
+        </div>
+
+        <div class="select_div">
+          <select name="position" id="position">
+            <option value="" disabled selected hidden>Position</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Nurse">Nurse</option>
+            <option value="Psychiatrist">Psychiatrist</option>
+            <option value="Nutritionist">Nutritionist</option>
+          </select>
+        </div>
+
+        <div class="input_div">
+          <input type="password" name="password" id="password" placeholder="Password">
+        </div>
+        <div class="input_div">
+          <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+        </div>
+
+        <div id="error_message_div">
+          <p id="error_message">Could not edit user details at this time. Please try signing back in and trying again.</p>
+        </div>
+
+        <div class="submit_link_container">
+          <button class="inactive_button" id="submit_button" type="submit" disabled>Submit</button>
+          <a id="cancel_button">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <link rel="stylesheet" href="/css/general/popup.css" />
+  <div id="page_overlay"></div>
+  <div id="popup">
+    <h1>Success.</h1>
+    <div class="popup-button-container">
+      <button><a href="/user/home">Ok</a></button>
+    </div>
+  </div>
+  <script type="module" src="/js/provider/editUser/index.js"></script>
+  <script src="/js/ui/navbar.js"></script>
+</body>
+
+</html>
