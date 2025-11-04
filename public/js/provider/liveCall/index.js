@@ -20,7 +20,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   setCurrentCall(callData);
 
   // Initiate the socketHandler
-  initSocket(access_token, true);
+
+  initSocket(access_token, "clinician");
 
   // Set up call buttons
   initButtons();

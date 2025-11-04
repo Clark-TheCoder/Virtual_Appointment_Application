@@ -12,5 +12,5 @@ async function joinCall() {
   showCallUI();
 
   const access_token = window.location.pathname.split("/").pop();
-  initSocket(access_token);
+  initSocket(access_token, "patient");
 }

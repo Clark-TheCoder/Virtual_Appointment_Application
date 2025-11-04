@@ -1,5 +1,9 @@
 import dotenv from "dotenv";
-import { findUserByEmail, createNewUser } from "../../models/user/userModel.js";
+import {
+  findUserByEmail,
+  createNewUser,
+  updateUserProfile,
+} from "../../models/user/userModel.js";
 import bcrypt from "bcrypt";
 dotenv.config();
 import { generateToken } from "../../utils/jwt.js";
@@ -96,3 +100,53 @@ export async function authenticateUser(req, res) {
     return res.status(500).json({ message: "Server error" });
   }
 }
+
+export async function updateUser(req, res) {
+  try {
+    //get ID of user from JWT token, not from the user var in localstorage
+    const userId = req.user.id;
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        message:
+          "You are not logged in or your session has expired. Please log in again.",
+      });
+    }
+    //get the filled out fields from the form
+    const userFields = {};
+    if (req.body.firstname) userFields.firstname = req.body.firstname;
+    if (req.body.lastname) userFields.lastname = req.body.lastname;
+    if (req.body.email) userFields.email = req.body.email;
+    if (req.body.position) userFields.position = req.body.position;
+    if (req.body.password) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      userFields.password = hashedPassword;
+    }
+    //call db function
+    const updatedUser = await updateUserProfile(userFields, userId);
+    if (updatedUser.affectedRows === 0) {
+      return res.status(400).json({
+        message:
+          "No changes made. Please make sure you've updated at least one field and try again.",
+      });
+    } else {
+      res.status(200).json({
+        message: "Your profile has been updated successfully.",
+        user: updatedUser,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message:
+        "An unexpected error occurred while updating your profile. Please try again later.",
+    });
+  }
+}
+
+const signoutUser = async (req, res) => {
+  if (!req.cookies.token) {
+    return res.status(400).json({ message: "No active session found." });
+  }
+
+  res.clearCookie("token");
+  res.status(200).json({ message: "Signed out successfully" });
+};

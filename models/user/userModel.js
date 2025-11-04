@@ -51,3 +51,38 @@ export async function findUserByEmail(email) {
     throw error;
   }
 }
+
+export async function updateUserProfile(userFields, userId) {
+  try {
+    const keys = Object.keys(userFields);
+    const values = Object.values(userFields);
+
+    if (keys.length === 0) {
+      throw new Error("No fields provided to update.");
+    }
+
+    const setClause = keys.map((key) => `${key} = ?`).join(", ");
+
+    // Update user info
+    const [result] = await pool.query(
+      `UPDATE user SET ${setClause} WHERE id = ?`,
+      [...values, userId]
+    );
+
+    if (result.affectedRows === 0) {
+      throw new Error("User not found or no changes made.");
+    }
+
+    // Fetch updated user
+    const [rows] = await pool.query(
+      `SELECT id, firstname, lastname, email, position
+       FROM user
+       WHERE id = ?`,
+      [userId]
+    );
+
+    return rows[0];
+  } catch (error) {
+    throw new Error("Error updating user profile: " + error.message);
+  }
+}

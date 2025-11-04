@@ -41,68 +41,37 @@ app.use("/user", userRoutes);
 const io = new SocketIOServer(server);
 
 io.on("connection", (socket) => {
-  console.log("A user connected to the socket.");
+  console.log("A user connected.");
 
-  socket.on("join-call", ({ roomId, initiator }) => {
-    console.log(`User joined call: ${roomId} | Initiator: ${initiator}`);
+  socket.on("join-call", ({ roomId, role }) => {
+    console.log(`User joined call: ${roomId} | Role: ${role}`);
     socket.join(roomId);
     socket.roomId = roomId;
-    socket.isInitiator = initiator || false;
+    socket.role = role;
 
-    // Notify others in the room that someone joined
-    socket.to(roomId).emit("user-joined", { initiator });
+    socket.to(roomId).emit("user-joined", { role });
   });
 
   socket.on("offer", ({ roomId, sdp }) => {
-    console.log(`Got offer for room: ${roomId}`);
-    // ✅ Send offer only to the other peer(s)
     socket.to(roomId).emit("offer", { sdp });
   });
 
   socket.on("answer", ({ roomId, sdp }) => {
-    console.log(`Got answer for room: ${roomId}`);
-    // ✅ Send answer only to the other peer(s)
     socket.to(roomId).emit("answer", { sdp });
   });
 
   socket.on("ice-candidate", ({ roomId, candidate }) => {
-    console.log(`Got ICE candidate for room: ${roomId}`);
-    // ✅ Send ICE candidates to other peers
     socket.to(roomId).emit("ice-candidate", { candidate });
   });
 
   socket.on("disconnect", () => {
-    console.log("A user disconnected.");
+    console.log(`${socket.role} disconnected.`);
     if (socket.roomId) {
-      socket.to(socket.roomId).emit("user-left");
+      socket.to(socket.roomId).emit("user-left", { role: socket.role });
     }
   });
 });
 
-// const io = new SocketIOServer(server);
-// io.on("connection", (socket) => {
-//   console.log("A user connected to the socket.");
-//   socket.on("join-call", ({ roomId }) => {
-//     console.log(`A user joined call: ${roomId}`);
-//     socket.join(roomId);
-//     socket.roomId = roomId;
-//     socket.to(roomId).emit("user-joined");
-//   });
-//   socket.on("offer", ({ roomId, sdp }) => {
-//     console.log("Got offer");
-//     io.to(roomId).emit("offer", { sdp });
-//   });
-//   socket.on("answer", ({ roomId, sdp }) => {
-//     console.log("Offering answer");
-//     io.to(roomId).emit("answer", { sdp });
-//   });
-//   socket.on("ice-candidate", ({ roomId, candidate }) => {
-//     console.log("Got ICE candidate for room:", roomId);
-//     socket.to(roomId).emit("ice-candidate", { candidate });
-//   });
-// });
-
-// Start server
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
