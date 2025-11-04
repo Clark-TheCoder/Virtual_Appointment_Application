@@ -4,23 +4,19 @@ fetch("/html/navbar.html")
     document.getElementById("nav-placeholder").innerHTML = data;
 
     // Add eventlistener to sign out user
-    // const { signout } = await import("../utils/api/signout.js");
-    // const signoutBtn = document.getElementById("logout");
-    // signoutBtn.addEventListener("click", async () => {
-    //   const { createErrorMessage } = await import(
-    //     "../../../utils/ui/createErrorMessage.js"
-    //   );
-    //   let signedOut = await signout();
-    //   if (signedOut) {
-    //     window.location = "/";
-    //   } else if (!signedOut) {
-    //     document.body.appendChild(
-    //       createErrorMessage(
-    //         "We’re having trouble reaching the service. Please refresh the page or try again later."
-    //       )
-    //     );
-    //   }
-    // });
+    const { signout } = await import("/js/api/signout.js");
+    const signoutBtn = document.getElementById("logout");
+    signoutBtn.addEventListener("click", async () => {
+      let signedOut = await signout();
+      if (signedOut) {
+        window.location = "/";
+        sessionStorage.clear();
+      } else if (!signedOut) {
+        alert(
+          "We’re having trouble reaching the service. Please try again later."
+        );
+      }
+    });
 
     const menuIcon = document.getElementById("menu_icon");
     const navigationContainer = document.getElementById("navigation_container");

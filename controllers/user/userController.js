@@ -142,11 +142,11 @@ export async function updateUser(req, res) {
   }
 }
 
-const signoutUser = async (req, res) => {
+export async function signoutUser(req, res) {
   if (!req.cookies.token) {
     return res.status(400).json({ message: "No active session found." });
   }
 
   res.clearCookie("token");
   res.status(200).json({ message: "Signed out successfully" });
-};
+}
