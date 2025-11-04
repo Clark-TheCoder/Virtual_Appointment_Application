@@ -23,6 +23,7 @@ export async function toggleCameraButton() {
   } else {
     const trackStatus = toggleCamera();
     if (trackStatus) {
+      showCameraStream(cameraStream);
       updateCameraUIOn();
     } else {
       updateCameraUIOff();
