@@ -1,6 +1,9 @@
+![Create Call](./public/media/promo/WWHLogo.png)
+
 # WellWave Health Video Appointment Application
 
 WellWave Health is an application I conceptualized to help clinicians make virtual appointments with patients easier.
+![Create Call](./public/media/promo/InCallDemo.png)
 
 ---
 
@@ -16,6 +19,8 @@ The benefit to WellWave Health is that it does not request the patient to downlo
 
 clinicians can be clinicians and can give the first 5 minutes of appointments back to patient care and not tech support
 
+![Create Call](./public/media/promo/WhyChoose.png)
+
 ---
 
 ## How It Works
@@ -30,7 +35,7 @@ clinicians can be clinicians and can give the first 5 minutes of appointments ba
 
 ![Create Call](./public/media/promo/AliasExample.png)
 
-### **3:** Patient receives email and joins via the link provided in the body of the email. No third party apps.
+### **3:** Patient receives email and joins via the link provided in the body of the email. No third party apps:
 
 ![Create Call](./public/media/promo/EmailLink.png)
 
